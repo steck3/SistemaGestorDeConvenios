@@ -40,7 +40,28 @@ else{
   $(document).ready(function(){
       $('#dtable').dataTable({
                 "aLengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                language:{
+                 
+                  search:         "Buscar",
+                  info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  infoPostFix: "",
+                  infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                  loadingRecords: "Cargando...",
+                  lengthMenu: "Mostrar _MENU_ registros",
+                  processing: "Procesando...",
+                  searchPlaceholder: "Término de búsqueda",
+                  zeroRecords: "No se encontraron resultados",
+                  emptyTable: "Ningún dato disponible en esta tabla",
+
+                  paginate:{
+                    first:      "Primero",
+                    previous:   "Anterior",
+                    next:       "Siguiente",
+                    last:       "Ultimo",
+                  }
+                }
             });
   })
     </script>
@@ -118,39 +139,17 @@ position:absolute;
 
           <!-- Left -->
           <ul class="navbar-nav mr-auto">
-          <!--   <li class="nav-item active">
-              <a class="nav-link waves-effect" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">About
-                MDB</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">Free
-                download</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">Free
-                tutorials</a>
-            </li> -->
           </ul>
             <?php 
 
              require_once("include/connection.php");
-
-
-               $id = mysqli_real_escape_string($conn,$_SESSION['email']);
-
-
+              $id = mysqli_real_escape_string($conn,$_SESSION['email']);
               $r = mysqli_query($conn,"SELECT * FROM usuarios where id_usuario = '$id'") or die (mysqli_error($con));
 
               $row = mysqli_fetch_array($r);
 
                $id=$row['email'];
-               // $fname=$row['fname'];
-               // $lname=$row['lname'];
+             
 
             ?>
 
@@ -158,7 +157,7 @@ position:absolute;
           <ul class="navbar-nav nav-flex-icons">
                 <li style="margin-top: 10px;">Bienvenido!</font> <?php echo ucwords(htmlentities($id)); ?></li>
            
-              <a href="logout.php" class="nav-link border border-light rounded waves-effect">
+                <a href="logout.php" class="nav-link border border-light rounded waves-effect"onclick="return confirm('¿Estás seguro de que deseas cerrar sesion?');">
                <i class="far fa-user-circle"></i>Cerrar sesion
               </a>
             </li>
@@ -185,7 +184,9 @@ position:absolute;
          <a href="organismo_op.php" class="list-group-item list-group-item-action waves-effect">
          <i class="fas fa-solid fa-school mr-3"></i>Organismos</a>
         <a href="document_op.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-folder mr-3"></i>Documentos</a>
+          <i class="fas fa-folder mr-3"></i>Convenios</a>
+          <a href="departamento.php" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-microscope mr-3"></i>Departamentos</a>
        
       </div>
     <!-- Sidebar -->

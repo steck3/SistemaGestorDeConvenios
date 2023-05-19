@@ -1,7 +1,7 @@
 <?php
   require_once("include/connection.php");
   $id_conv = $_POST['id_conv'];
-  $query = mysqli_query($conn, "SELECT * FROM convenios WHERE id_conv = $id_conv") or die(mysqli_error($conn));
+  $query = mysqli_query($conn, "SELECT * FROM convenio WHERE id_conv = $id_conv") or die(mysqli_error($conn));
   
   if ($file = mysqli_fetch_array($query)) {
          $name =  $file['nombre'];

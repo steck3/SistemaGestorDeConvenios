@@ -40,7 +40,28 @@ else{
   $(document).ready(function(){
       $('#dtable').dataTable({
                 "aLengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                language:{
+                 
+                  search:         "Buscar",
+                  info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                  infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                  infoPostFix: "",
+                  infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                  loadingRecords: "Cargando...",
+                  lengthMenu: "Mostrar _MENU_ registros",
+                  processing: "Procesando...",
+                  searchPlaceholder: "Término de búsqueda",
+                  zeroRecords: "No se encontraron resultados",
+                  emptyTable: "Ningún dato disponible en esta tabla",
+
+                  paginate:{
+                    first:      "Primero",
+                    previous:   "Anterior",
+                    next:       "Siguiente",
+                    last:       "Ultimo",
+                  }
+                }
             });
   })
     </script>
@@ -118,39 +139,16 @@ position:absolute;
 
           <!-- Left -->
           <ul class="navbar-nav mr-auto">
-          <!--   <li class="nav-item active">
-              <a class="nav-link waves-effect" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">About
-                MDB</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">Free
-                download</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link waves-effect" href="#">Free
-                tutorials</a>
-            </li> -->
+          
           </ul>
             <?php 
 
              require_once("include/connection.php");
-
-
-               $id = mysqli_real_escape_string($conn,$_SESSION['email']);
-
-
+              $id = mysqli_real_escape_string($conn,$_SESSION['email']);
               $r = mysqli_query($conn,"SELECT * FROM usuarios where id_usuario = '$id'") or die (mysqli_error($con));
-
               $row = mysqli_fetch_array($r);
-
-               $id=$row['email'];
-               // $fname=$row['fname'];
-               // $lname=$row['lname'];
+              $id=$row['email'];
+               
 
             ?>
 
@@ -168,7 +166,7 @@ position:absolute;
               </a>
             </li>
             <li class="nav-item">
-              <a href="logout.php" class="nav-link border border-light rounded waves-effect">
+            <a href="logout.php" class="nav-link border border-light rounded waves-effect"onclick="return confirm('¿Estás seguro de que deseas cerrar sesion?');">
                <i class="far fa-user-circle"></i>Cerrar sesion
               </a>
             </li>
@@ -185,14 +183,16 @@ position:absolute;
       <a class="img-fluid"><img src="img/logo_ucaribe.png" width="200px" height="85px" div style="margin: 20px;"  alt="Responsive image">
     </a>
 
-      <div class="list-group list-group-flush">
-        
-        
+    <div class="list-group list-group-flush">
+        <a href="operador.php" class="list-group-item active waves-effect">
+          <i class="fas fa-chart-pie mr-3"></i>Panel principal</a>
          <a href="organismo_op.php" class="list-group-item list-group-item-action waves-effect">
          <i class="fas fa-solid fa-school mr-3"></i>Organismos</a>
         <a href="document_op.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-folder mr-3"></i>Documentos</a>
-        
+          <i class="fas fa-folder mr-3"></i>Convenios</a>
+          <a href="departamento.php" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-microscope mr-3"></i>Departamentos</a>
+       
       </div>
     <!-- Sidebar -->
 
@@ -308,7 +308,7 @@ position:absolute;
         Agregar Organismo
       </button>
       <div class="modal" id="ModalOrg">
-      <form action="location.php" method="POST">
+      <form action="create_org.php" method="POST">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -325,8 +325,8 @@ position:absolute;
         <input id="org" name="org" type="text" required="required" class="form-control">
         </div>
         <div class="form-group">
-    <label for="id_org">Identificador del organismo</label> 
-    <input id="id_org" name="id_org" type="text" required="required" class="form-control">
+    <label for="alias">Alias</label> 
+    <input id="alias" name="alias" type="text" required="required" class="form-control">
   </div>
 
   <div class="form-group">
@@ -337,82 +337,75 @@ position:absolute;
     <label for="rep_ext">Representante legal del organismo</label> 
     <input id="rep_ext" name="rep_ext" type="text" class="form-control">
   </div>
+  
   <div class="form-group">
     <label for="textarea">Dirección</label> 
-    <textarea id="textarea" name="textarea" cols="40" rows="5" class="form-control"></textarea>
+    <textarea id="textarea" name="dir" cols="40" rows="5" class="form-control"></textarea>
   </div>
   <div class="form-group">
     <label for="text">Código postal</label> 
-    <input id="text" name="text" type="text" class="form-control">
+    <input id="text" name="postal" type="text" class="form-control">
   </div> 
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-info" name="reguser">Registrar</button>
+        <button class="btn btn-info" name="regorg">Registrar</button>
       </div>
     </div>
   </div>
-</div>
-</form>
-
-
-
-      </div>
-
-
+  </div>
+  </form></div>
 <div class="">
-  
  <table id="dtable" class = "table table-striped">
-
-
           <thead>
               <th>Organismo</th>
-              <th>id_org</th>
-              <th> Tipo de institucion</th>
+              <th>Alias</th>
+              <th>Tipo de institución</th>
               <th>Representante</th>
-               <th>Opciones</th>
+              <th>Dirección</th>
+              <th>Codigo postal</th>
+              <th>Opciones</th>
           </thead><br /><br />
           <tbody>
      <?php
          require_once("include/connection.php");
-
             $query="SELECT * FROM organismos";
             $result=mysqli_query($conn,$query);
             while($rs=mysqli_fetch_array($result)){
-                $id =  $rs['id'];
-               $fname=$rs['nombre'];
-               $admin=$rs['id_org'];
+               $id_orga=$rs['id_orga'];
+               $nombre=$rs['nombre']; 
+               $alias=$rs['alias'];
                $tipo=$rs['tipo'];
                $rep=$rs['representante'];
-           
+               $dir=$rs['direccion'];
+               $cp=$rs['codigo postal'];
           ?>       
-    
-           <tr>
-               <td width='10%'><?php echo  $fname; ?></td>
-               <td align='left'><?php echo $admin; ?></td>
-               <td align='center'><?php echo $tipo; ?></td>
-               <td align='center'><?php echo $rep; ?></td>
-               <td align='center'><a href="#modalRegisterFormss?id=<?php echo $id;?>"><i class="fas fa-user-edit" data-toggle="modal" data-target="#modalRegisterFormss">|</i></a>
-               <a href="delete_user.php?id=<?php echo htmlentities($rs['id']); ?>"><i class='far fa-trash-alt'></i></a></td>
-            
-           </tr>
+    <tr>
+    <td width='15%'><?php echo $nombre; ?></td>
+    <td width='5%'><?php echo $alias; ?></td>
+    <td width="8%"><?php echo $tipo; ?></td>
+    <td width="10%"><?php echo $rep; ?></td>
+    <td width="10%"><?php echo $dir; ?></td>
+    <td width="5%"><?php echo $cp; ?></td>
+    <td align='center' width="1%"> 
+    <a href="#" class="edit_org" data-toggle="modal" data-target="#update_org" data-org-id="<?php echo $id_orga; ?>">
+  <i class="far fa-edit"></i>
+</a>
+
+<a href="delete_org.php?id=<?php echo htmlentities($rs['id_orga']); ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar este elemento?')">
+  <i class='far fa-trash-alt'></i>
+</a>
+      
+    </td>
+  </tr>
        
     <?php  } ?>
        </tbody>
    </table>
-
-<!-- <div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
-    Modal Register Form</a>
-</div> -->
-    <hr></div>
-    
-  
-
+    <hr></div>  
   </footer>
   <!--/.Footer-->
 
-<!-- Card -->
   <!-- /Start your project here-->
 
   <!-- SCRIPTS -->
@@ -433,87 +426,85 @@ position:absolute;
 </body>
    <!--modal--->
 
-
-
-
-
-
-<div class="modal fade" id="modalRegisterFormss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-    <?php 
-
-require_once("include/connection.php");
-  
-$q = mysqli_query($conn,"select * from login_user where id = '$id'") or die (mysqli_error($conn));
- $rs1 = mysqli_fetch_array($q);
- 
-               $id1=$rs1['id'];
-               $fname1=$rs1['nombre_usuario'];
-               $admin1=$rs1['email_address'];
-               $pass1=$rs1['user_password'];
-               $status=$rs1['user_status'];
-?>
-  <div class="modal-dialog" role="document">
-    <form method="POST">
-    
+   <div class="modal fade" id="update_org">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold"><i class="fas fa-user-edit"></i> Editar Usuario</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        <div class="modal-body mx-3">
-           <div class="md-form mb-5">
-            <input type="hidden" class="form-control" name="id" value="<?php echo $id1;?>"><br>
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="orangeForm-name" name="nombre_usuario" value="<?php echo $fname1;?>" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Nombre</label>
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="orangeForm-email" name="email_address" value="<?php echo $admin1;?>" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Correo Electronico</label>
-        </div>
 
-        <div class="md-form mb-4">
-          <i class="fas fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" name="user_password" value="<?php echo $pass1;?>" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Contraseña</label>
-        </div>
-       <div class="md-form mb-4">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="orangeForm-pass" name="status" value = "Usuario" class="form-control validate" readonly="">
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Status </label>
-        </div>
+    <!-- Modal Header -->
+    <div class="modal-header text-center">
+      <h4 class="modal-title w-100 font-weight-bold"><i class="far fa-edit"></i> Editar usuario</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body mx-3">
+    <?php
+require_once("include/connection.php");
+if(isset($_GET['id'])) {
+  $query = "SELECT * FROM organismos WHERE id_orga=" . $_GET['id'];
+  $result = mysqli_query($conn, $query);
+  if(mysqli_num_rows($result) == 1) {
+    $row = mysqli_fetch_array($result);
+    $nombre = $row['nombre'];
+    $alias = $row['alias'];
+    $tipo = $row['tipo'];
+    $rep = $row['representante'];
+    $dir = $row['direccion'];
+    $cp = $row['codigo postal'];
+  }
+}
+?>
+
+    <form action="update_org.php" method="POST">
+    <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+      <div class="form-group">
+        <label for="nombre">Nombre del organismo:</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $nombre; ?>" required>
       </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-primary" name="edit">ACTUALIZAR</button>
+      <div class="form-group">
+        <label for="alias">Alias:</label>
+        <input type="text" id="alias" name="alias" class="form-control" value="<?php echo $alias; ?>" required>
       </div>
+      <div class="form-group">
+        <label for="tipo">Tipo:</label>
+        <input type="text" id="tipo" name="tipo" class="form-control" value="<?php echo $tipo; ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="rep">Representante:</label>
+        <input type="text" id="rep" name="rep" class="form-control" value="<?php echo $rep; ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="dir">Dirección:</label>
+        <input type="text" id="dir" name="dir" class="form-control" value="<?php echo $dir; ?>" required>
+      </div>
+      <div class="form-group">
+        <label for="cp">Código postal:</label>
+        <input type="text" id="cp" name="cp" class="form-control" value="<?php echo $cp; ?>" required>
+      </div>
+      </div>
+    <input type="hidden" name="id_orga" value="<?php echo $id_orga; ?>">
+    <!-- Modal footer -->
+    <div class="modal-footer d-flex justify-content-center">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      <button type="submit" class="btn btn-primary" name="update"onclick="return confirm('¿Los cambios son correctos?')">Actualizar</button>
+    </div>
+
+  </div>
+</div>
+
+        </form>
+      </div>
+
     </div>
   </div>
 </div>
-</form>
 
-  <!--modal--->
- <?php 
+<script>
+$(document).ready(function(){
+  $("#update_org").on('hide.bs.modal', function(){
+    $(this).find('form').trigger('reset');
+  });
+});
+</script>
 
- require_once("include/connection.php");
-
-  
- if(isset($_POST['edit'])){
-         $user_name = mysqli_real_escape_string($conn,$_POST['nombre_usuario']);
-         $email_address = mysqli_real_escape_string($conn,$_POST['email_address']);
-         $user_password = password_hash($_POST['user_password'], PASSWORD_DEFAULT, array('cost' => 12));  
-       //  $user_status = mysqli_real_escape_string($conn,$_POST['status']);
-
-     mysqli_query($conn,"UPDATE `login_user` SET `nombre_usaurio` = '$user_name', `email_address` = '$email_address', `user_password` = '$user_password' where id='$id'") or die (mysqli_error($conn));
-  
-  echo "<script type = 'text/javascript'>alert('Success Edit User/Employee!!!');document.location='view_user.php'</script>";
-
-}
-
-?>
 </html>

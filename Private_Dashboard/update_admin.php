@@ -20,7 +20,7 @@ if(isset($_POST['id'])) {
   }
   
   // Redireccionar a la página principal
-  header("Location: view_admin.php");
+  header("Location: usuarios.php");
   exit();
 }
 ?>

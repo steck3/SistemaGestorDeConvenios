@@ -162,93 +162,16 @@ position:absolute;
       <div class="list-group list-group-flush">
         <a href="dashboard.php" class="list-group-item active waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>Panel principal
-        </a>
-         
-         <a href="usuarios.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-users mr-3"></i>Usuarios</a>
-         
-         <a href="organismos.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-solid fa-university mr-3"></i>Organismos</a>
-        <a href="convenio.php" class="list-group-item list-group-item-action waves-effect">
+        <a href="convenio_user.php" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-folder mr-3"></i>Convenios</a>
-        <a href="departamento.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-microscope mr-3"></i>Departamentos</a>
-              <a href="user_log.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-chalkboard-teacher mr-3"></i>Sesiones de usuarios</a>
-    <!--     <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-money-bill-alt mr-3"></i>Orders</a> -->
+        
       </div>
     <!-- Sidebar -->
 
   </header>
   <!--Add admin-->
-  <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <form action="create_Admin.php" method="POST">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold"><i class="fas fa-user-plus"></i> Agregar usuario</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-           <div class="md-form mb-5">
-        </div>
-        <form>
-  <div class="form-group">
-    <label for="text">Nombre completo</label> 
-    <input id="text" name="nombre" type="text" class="form-control" required="required">
-  </div>
-  <div class="form-group">
-    <label for="text1">Correo electrónico</label> 
-    <input id="text1" name="email" type="text" class="form-control" required="required">
-  </div>
-  <div class="form-group">
-    <label for="text2">Contraseña</label> 
-    <input id="text2" name="pass" type="text" class="form-control" required="required">
-  </div>
-  <div class="form-group">
-    <label for="rol">Rol</label> 
-    <div>
-      <select id="rol" name="rol" required="required" class="custom-select">
-        <option value="op_ext">Operador Externo</option>
-        <option value="op_int">Operador Interno</option>
-        <option value="rep_ext">Representante Externo</option>
-        <option value="rep_int">Representante Interno</option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="dep">Departamento</label> 
-    <div>
-      <select id="dep" name="dep" class="custom-select" required="required">
-        <option value="Practicas">Practicas</option>
-        <option value="Vinculacion">Vinculacion</option>
-        <option value="Negocios">Negocios</option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="select">Tipo de usuario</label> 
-    <div>
-      <select id="select" name="tipo" class="custom-select">
-        <option value="admin">Administrador</option>
-        <option value="usuario">Usuario</option>
-      </select>
-    </div>
-  </div> 
-  </form>
-
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-info" name="reg">Registrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-</form>
+  
+      
 <!--end modaladmin-->
   <!--Add organismo-->
   <div class="modal fade" id="modalRegisterForm2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

@@ -56,7 +56,7 @@ if(isset($_POST["adminlog"])){
           header("Location: operador.php");
           break;
         case "usuario":
-          header("Location: usuario.php");
+          header("Location: dashboard_user.php");
           break;
         default:
           header("Location: dashboard.php");

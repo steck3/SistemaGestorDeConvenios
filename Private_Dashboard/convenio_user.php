@@ -104,6 +104,8 @@ pdf.save(name + '.pdf');
 });
 });
 </script>
+
+
   <style>
           select[multiple], select[size] {
     height: auto;
@@ -207,21 +209,12 @@ position:absolute;
     </a>
 
       <div class="list-group list-group-flush">
-        <a href="dashboard.php" class="list-group-item active waves-effect">
+        <a href="dashboard_user.php" class="list-group-item active waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>Panel principal
         </a>
-        
-         <a href="usuarios.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-users mr-3"></i>Usuarios</a>
-         
-         <a href="organismos.php" class="list-group-item list-group-item-action waves-effect">
-         <i class="fas fa-solid fa-university mr-3"></i>Organismos</a>
-        <a href="convenio.php" class="list-group-item list-group-item-action waves-effect">
+        <a href="convenio_user.php" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-folder mr-3"></i>Convenios</a>
-        <a href="departamento.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-microscope mr-3"></i>Departamentos</a>
-              <a href="user_log.php" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-chalkboard-teacher mr-3"></i>Sesiones de usuarios</a>
+        
    
       </div>
     <!-- Sidebar -->
@@ -247,232 +240,7 @@ position:absolute;
           </h4>
         </div>
       </div>   
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalDoc">
-        Agregar convenio
-      </button>
-      <div class="modal" id="ModalDoc">
-      <form action="create_conv.php" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="usuario" value="<?php echo $id ?>">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold"><i class="fas fa-file-medical"></i> Agregar convenio </h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">          
-    <div class="form-group">
-        <label for="org">Nombre del convenio</label> 
-        <input id="org" name="nombre" type="text" required="required" class="form-control">
-        </div>
-        <label for="org">Organismo</label> 
-    <div class="form-group">
-    <select id="org" name="org" aria-describedby="orgHelpBlock" required="required" class="custom-select">
-<option value="">Seleccione un organismo</option>
-<?php
-require_once("include/connection.php");
-$resultado = mysqli_query($conn, "SELECT nombre FROM organismos");
-while ($fila = mysqli_fetch_array($resultado)) {
-echo '<option value="' . $fila["nombre"] . '">' . $fila["nombre"] . '</option>';
-}
-mysqli_free_result($resultado);
-?>
-</select>
-        <script>
-        document.getElementById("org").addEventListener("change", function() {
-       var organismo = this.value;
-       var xhr = new XMLHttpRequest();
-       xhr.open("GET", "get-data.php?organismo=" + organismo);
-       xhr.onload = function() {
-       if (xhr.status === 200) {
-       var data = JSON.parse(xhr.responseText);
-       var rep_ext = document.getElementById("rep_ext");
-       var dept_ext = document.getElementById("dept_ext");
-       var op_ext = document.getElementById("op_ext");
-       rep_ext.innerHTML = "";
-       dept_ext.innerHTML = "";
-       op_ext.innerHTML = "";
-       for (var i = 0; i < data.length; i++) {
-       var option = document.createElement("option");
-       option.value = data[i].nombre;
-       option.text = data[i].nombre;
-       rep_ext.appendChild(option);
-       dept_ext.appendChild(option);
-       op_ext.appendChild(option); 
-       }
-       }
-        };
-        xhr.send();
-        });
-        </script>
-
-
-
-       
-      <span id="orgHelpBlock" class="form-text text-muted">Seleccione o agregue la institución educativa.</span>
-    </div>
-    <div class="form-group">
-    <label for="rep_ext">Representante Externo</label> 
-    <div>
-    <?php 
-    require_once("include/connection.php");
-    $res = mysqli_query($conn, "SELECT representante FROM organismos");
-    echo '<select id="rep_ext" name="rep_ext"  required="required" class="custom-select">';
-    while ($fila = mysqli_fetch_array($res)) {
-    echo '<option value="' . $fila["representante"] . '">' . $fila["representante"] . '</option>';
-    }
-    echo '</select>';
-    mysqli_free_result($res);
-    ?>
-    </div>
-    </div>
-
-   <div class="form-group">
-    <label for="dept_ext">Departamento externo</label> 
-    <div>
-    <?php 
-    require_once("include/connection.php");
-    $res = mysqli_query($conn, "SELECT dept FROM departamento");
-    echo '<select id="dept_ext" name="dept_ext"  required="required" class="custom-select">';
-    while ($fila = mysqli_fetch_array($res)) {
-    echo '<option value="' . $fila["dept"] . '">' . $fila["dept"] . '</option>';
-    }
-    echo '</select>';
-    mysqli_free_result($res);
-    ?>
-
-      <span id="dep_ex" class="form-text text-muted">Departamento del operador externo.</span>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="op_ext">Operador Externo</label> 
-    <div>
-    <?php 
-    require_once("include/connection.php");
-    $res = mysqli_query($conn, "SELECT operador FROM departamento");
-    echo '<select id="op_ext" name="op_ext"  required="required" class="custom-select">';
-    while ($fila = mysqli_fetch_array($res)) {
-    echo '<option value="' . $fila["operador"] . '">' . $fila["operador"] . '</option>';
-    }
-    echo '</select>';
-    mysqli_free_result($res);
-    ?>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="firma_ext">Firma externa</label> 
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <i class="fa fa-pencil-square-o"></i>
-        </div>
-      </div> 
-      <input id="firma_ext" name="firma_ext" placeholder="DD/MM/YYYY" type="date" required="required" class="form-control">
-     </div>
-     </div> 
-     <div class="form-group">
-     <label for="rep_int">Representante Interno</label> 
-     <div>
-     <?php 
-     require_once("include/connection.php");
-      $res = mysqli_query($conn, "SELECT representante FROM organismos");
-      echo '<select id="rep_int" name="rep_int"  required="required" class="custom-select">';
-      while ($fila = mysqli_fetch_array($res)) {
-      echo '<option value="' . $fila["representante"] . '">' . $fila["representante"] . '</option>';
-      }
-      echo '</select>';
-      mysqli_free_result($res);
-    ?>     
-        </div>
-        </div>
-      <div class="form-group">
-      <label for="dep_int">Departamento</label> 
-      <div>
-      <?php 
-        require_once("include/connection.php");
-        $res = mysqli_query($conn, "SELECT dept FROM departamento");
-        echo '<select id="dept_int" name="dep_int"  required="required" class="custom-select">';
-        while ($fila = mysqli_fetch_array($res)) {
-        echo '<option value="' . $fila["dept"] . '">' . $fila["dept"] . '</option>';
-        }
-        echo '</select>';
-         mysqli_free_result($res);
-      ?>
-      <span id="dep_intHelpBlock" class="form-text text-muted">Departamento del operador interno.</span>
-      </div>
-      </div> 
-      <div class="form-group">
-      <label for="op_int">Operador Interno</label> 
-      <div>
-      <?php 
-    require_once("include/connection.php");
-    $res = mysqli_query($conn, "SELECT operador FROM departamento");
-    echo '<select id="op_int" name="op_int"  required="required" class="custom-select">';
-    while ($fila = mysqli_fetch_array($res)) {
-    echo '<option value="' . $fila["operador"] . '">' . $fila["operador"] . '</option>';
-    }
-    echo '</select>';
-    mysqli_free_result($res);
-    ?>
-      </div>
-      </div>
-    <div class="form-group">
-    <label for="firma_int">Firma interna</label> 
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <i class="fa fa-pencil-square-o"></i>
-        </div>
-      </div> 
-      <input id="firma_int" name="firma_int" placeholder="DD/MM/YYYY" type="date" required="required" class="form-control">
-    </div>
-    </div>
-  <div class="form-group">
-    <label for="vigencia_inicio">Inicio del convenio</label> 
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <i class="fas fa-calendar-check-o"></i>
-        </div>
-      </div> 
-      <input id="vigencia_inicio" name="vig_inicio" placeholder="DD/MM/YYYY" type="date" class="form-control">      
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="vigencia_fin">Finalización del convenio</label> 
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <i class="fa fa-calendar-minus-o"></i>
-        </div>
-      </div> 
-      <input id="vigencia_fin" name="vig_fin" placeholder="DD/MM/YYYY" type="date" class="form-control">
-      </div>
-      </div>   
-    <div class="form-group">
-    <label for="beneficios">Beneficios</label> 
-    <textarea id="beneficios" name="beneficios" cols="40" rows="10" class="form-control"></textarea>
-      </div>
-    <div class="form-group">
-      <label for="compromisos">Compromisos</label> 
-      <textarea id="compromisos" name="compromisos" cols="40" rows="10" class="form-control"></textarea>
-      </div> 
-  
-  <div class="form-group">
-  <label for="myfile">Seleccione un archivo:</label>
-  <input type="file" id="myfile" name="myfile"><br><br>
-          <footer style="font-size: 16px"><b>File Type:</b><font color="red"><i>.pdf</i></font></footer>
-</div>
-  <div class="form-group">
-    <button class="btn btn-info" name="regconv" type="submit" >Registrar</button>
-  </div>
-  </div>
-  </div>
-  </div>
-</form>   
-      </div>
-      </div>
+   
 <hr>
  <div class="col-md-12">
  <table id="dtable" class = "table table-striped">
@@ -523,9 +291,8 @@ mysqli_free_result($resultado);
        <td width="10%"><?php echo $vigencia_i; ?></td>
        <td width="10%"><?php echo $vigencia_f; ?></td>
        <td width="10%"><?php echo $user; ?></td>
-       <td width="25%"><a href='downloads.php?file_id=<?php echo $id; ?>'  class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></a> 
+       <td width="15%"><a href='downloads.php?file_id=<?php echo $id; ?>'  class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></a> 
        <a href='#<?php echo $id; ?>' data-id='<?php echo $id; ?>' data-toggle='modal' data-target='#myModal' class='btn btn-sm btn-outline-primary file-info'><i class='fa fa-file' id='file-<?php echo $id; ?>'></i></a>
-       <a href='delete_conv.php?id=<?php echo $id; ?>'  class="btn btn-sm btn-outline-danger"onclick="return confirm('¿Estás seguro de que deseas eliminar este elemento?')"><i class="fa fa-trash"></i></a> 
     </tr>
 <?php } ?> 
 <!-- Este es el modal donde se mostrarán los datos -->

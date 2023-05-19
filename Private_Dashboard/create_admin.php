@@ -18,7 +18,7 @@
 			echo '
 				<script type = "text/javascript">
 					alert("Direccion de correo no disponible.");
-					window.location = "view_admin.php";
+					window.location = "usuarios.php";
 				</script>
 			';
 		}else{
@@ -26,7 +26,7 @@
 			echo '
 				<script type = "text/javascript">
 					alert("¡Usuario registrado!");
-					window.location = "view_admin.php";
+					window.location = "usuarios.php";
 				</script>
 			';
 		}

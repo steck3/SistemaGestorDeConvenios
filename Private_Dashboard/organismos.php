@@ -184,7 +184,7 @@ position:absolute;
            
             
             <li class="nav-item">
-              <a href="logout.php" class="nav-link border border-light rounded waves-effect">
+            <a href="logout.php" class="nav-link border border-light rounded waves-effect"onclick="return confirm('¿Estás seguro de que deseas cerrar sesion?');">
                <i class="far fa-user-circle"></i>Cerrar sesión
               </a>
             </li>
@@ -206,7 +206,7 @@ position:absolute;
           <i class="fas fa-chart-pie mr-3"></i>Panel principal
         </a>
          
-         <a href="view_admin.php" class="list-group-item list-group-item-action waves-effect">
+         <a href="usuarios.php" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-users mr-3"></i>Usuarios</a>
         
          <a href="organismos.php" class="list-group-item list-group-item-action waves-effect">
