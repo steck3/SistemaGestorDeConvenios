@@ -22,7 +22,7 @@
 			$conn->query("INSERT INTO `departamento` VALUES('', '$dept', '$operador', '$org')") or die(mysqli_error());
 			echo '
 				<script type = "text/javascript">
-					alert("Registro exitoso");window.location = "admin_log.php";
+					alert("Registro exitoso");window.location = "departamento.php";
 				</script>
 			';
 		}

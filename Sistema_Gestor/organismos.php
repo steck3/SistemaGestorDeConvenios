@@ -290,12 +290,12 @@ position:absolute;
   </div>
   
   <div class="form-group">
-    <label for="textarea">Dirección</label> 
-    <textarea id="textarea" name="dir" cols="40" rows="5" class="form-control"></textarea>
+    <label for="dir">Dirección</label> 
+    <textarea id="dir" name="dir" cols="40" rows="5" class="form-control"></textarea>
   </div>
   <div class="form-group">
-    <label for="text">Código postal</label> 
-    <input id="text" name="postal" type="text" class="form-control">
+    <label for="postal">Código postal</label> 
+    <input id="postal" name="postal" type="text" class="form-control">
   </div> 
 
       </div>
