@@ -22,7 +22,7 @@
 		 $user_firma_int = mysqli_real_escape_string($conn,$_POST['firma_int']);
          $user_beneficios = mysqli_real_escape_string($conn,$_POST['beneficios']);
          $user_compromisos = mysqli_real_escape_string($conn,$_POST['compromisos']);
-		 $q_checkadmin = $conn->query("SELECT * FROM `convenios` WHERE `nombre` = '$user_nombre'") or die(mysqli_error($conn));
+		 $q_checkadmin = $conn->query("SELECT * FROM `convenio` WHERE `nombre` = '$user_nombre'") or die(mysqli_error($conn));
 		 $v_checkadmin = $q_checkadmin->num_rows;
 		 if($v_checkadmin == 1){
 			echo '
@@ -32,7 +32,7 @@
 				</script>
 			';
 		}else{
-				$conn->query("INSERT INTO `convenios` VALUES('','$user_nombre', '$user_org','',' $user_vig_inicio', ' $user_vig_fin','$user_rep_ext','$user_op_ext','$user_dep_ext',' $user_firma_ext','$user_rep_int','$user_op_int','$user_dep_int','$user_firma_int','$user_beneficios','$user_compromisos','$usuario','$file_path','')") or die(mysqli_error($conn));
+				$conn->query("INSERT INTO `convenio` VALUES('','$user_nombre', '$user_org','',' $user_vig_inicio', ' $user_vig_fin','$user_rep_ext','$user_op_ext','$user_dep_ext',' $user_firma_ext','$user_rep_int','$user_op_int','$user_dep_int','$user_firma_int','$user_beneficios','$user_compromisos','$usuario','$file_path','')") or die(mysqli_error($conn));
 				echo '
 				<script type = "text/javascript">
 					alert("Registro de convenio con exito.");window.location = "convenio.php";
